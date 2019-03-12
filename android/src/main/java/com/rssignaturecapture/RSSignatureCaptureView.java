@@ -192,7 +192,15 @@ public class RSSignatureCaptureView extends View {
 
 	private void ensureSignatureBitmap() {
 		if (mSignatureBitmap == null) {
-			mSignatureBitmap = Bitmap.createBitmap(getWidth(), getHeight(),
+			int newHeight;
+			// sometimes the height is 0 which breaks Bitmap.createBitmap
+			if (getHeight() == 0) {
+				// the default image height that gets set in getResizedBitmap, I think
+				newHeight = 343;
+			} else {
+				newHeight = getHeight();
+			}
+			mSignatureBitmap = Bitmap.createBitmap(getWidth(), newHeight,
 					Bitmap.Config.ARGB_8888);
 			mSignatureBitmapCanvas = new Canvas(mSignatureBitmap);
 		}
